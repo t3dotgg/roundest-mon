@@ -8,9 +8,15 @@
     "start": "next start"
   },
   "dependencies": {
+    "@trpc/client": "^9.15.0",
+    "@trpc/next": "^9.15.0",
+    "@trpc/react": "^9.15.0",
+    "@trpc/server": "^9.15.0",
     "next": "12.0.4",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "react-query": "^3.33.5",
+    "zod": "^3.11.6"
   },
   "devDependencies": {
     "@types/react": "17.0.37",
