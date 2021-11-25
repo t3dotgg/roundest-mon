@@ -1,19 +1,26 @@
 import * as trpc from "@trpc/server";
 import { z } from "zod";
 import { prisma } from "@/backend/utils/prisma";
+import { getOptionsForVote } from "@/utils/getRandomPokemon";
 
 export const appRouter = trpc
   .router()
-  .query("get-pokemon-by-id", {
-    input: z.object({ id: z.number() }),
-    async resolve({ input }) {
-      const pokemon = await prisma.pokemon.findFirst({
-        where: { id: input.id },
+  .query("get-pokemon-pair", {
+    async resolve() {
+      const [first, second] = getOptionsForVote();
+
+      const firstPokemon = await prisma.pokemon.findFirst({
+        where: { id: first },
       });
 
-      if (!pokemon) throw new Error("lol doesn't exist");
+      // TODO: Use some math based on a sort
+      const secondPokemon = await prisma.pokemon.findFirst({
+        where: { id: second },
+      });
 
-      return pokemon;
+      if (!firstPokemon || !secondPokemon) throw new Error("lol doesn't exist");
+
+      return { firstPokemon, secondPokemon };
     },
   })
   .mutation("cast-vote", {

@@ -1,6 +1,4 @@
-import { getOptionsForVote } from "@/utils/getRandomPokemon";
 import { trpc } from "@/utils/trpc";
-import { useState } from "react";
 import type React from "react";
 import { inferQueryResponse } from "./api/trpc/[trpc]";
 
@@ -13,32 +11,41 @@ const btn =
   "inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm font-medium rounded-full text-gray-700 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500";
 
 export default function Home() {
-  const [ids, updateIds] = useState(() => getOptionsForVote());
-
-  const [first, second] = ids;
-
-  const firstPokemon = trpc.useQuery(["get-pokemon-by-id", { id: first }]);
-  const secondPokemon = trpc.useQuery(["get-pokemon-by-id", { id: second }]);
+  const {
+    data: pokemonPair,
+    refetch,
+    isLoading,
+  } = trpc.useQuery(["get-pokemon-pair"], {
+    refetchInterval: 0,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+  });
 
   const voteMutation = trpc.useMutation(["cast-vote"]);
   const plausible = usePlausible();
 
   const voteForRoundest = (selected: number) => {
-    if (selected === first) {
-      voteMutation.mutate({ votedFor: first, votedAgainst: second });
+    if (!pokemonPair) return; // Early escape to make Typescript happy
+
+    if (selected === pokemonPair?.firstPokemon.id) {
+      // If voted for 1st pokemon, fire voteFor with first ID
+      voteMutation.mutate({
+        votedFor: pokemonPair.firstPokemon.id,
+        votedAgainst: pokemonPair.secondPokemon.id,
+      });
     } else {
-      voteMutation.mutate({ votedFor: second, votedAgainst: first });
+      // else fire voteFor with second ID
+      voteMutation.mutate({
+        votedFor: pokemonPair.secondPokemon.id,
+        votedAgainst: pokemonPair.firstPokemon.id,
+      });
     }
 
     plausible("cast-vote");
-    updateIds(getOptionsForVote());
+    refetch();
   };
 
-  const dataLoaded =
-    !firstPokemon.isLoading &&
-    firstPokemon.data &&
-    !secondPokemon.isLoading &&
-    secondPokemon.data;
+  const dataLoaded = !!pokemonPair;
 
   return (
     <div className="h-screen w-screen flex flex-col justify-between items-center relative">
@@ -49,13 +56,15 @@ export default function Home() {
       {dataLoaded && (
         <div className="p-8 flex justify-between items-center max-w-2xl flex-col md:flex-row">
           <PokemonListing
-            pokemon={firstPokemon.data}
-            vote={() => voteForRoundest(first)}
+            pokemon={pokemonPair.firstPokemon}
+            vote={() => voteForRoundest(pokemonPair.firstPokemon.id)}
+            disabled={isLoading}
           />
           <div className="p-8 italic text-xl">or</div>
           <PokemonListing
-            pokemon={secondPokemon.data}
-            vote={() => voteForRoundest(second)}
+            pokemon={pokemonPair.secondPokemon}
+            vote={() => voteForRoundest(pokemonPair.secondPokemon.id)}
+            disabled={isLoading}
           />
           <div className="p-2" />
         </div>
@@ -72,14 +81,15 @@ export default function Home() {
   );
 }
 
-type PokemonFromServer = inferQueryResponse<"get-pokemon-by-id">;
+type PokemonFromServer = inferQueryResponse<"get-pokemon-pair">["firstPokemon"];
 
 const PokemonListing: React.FC<{
   pokemon: PokemonFromServer;
   vote: () => void;
+  disabled: boolean;
 }> = (props) => {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center" key={props.pokemon.id}>
       <div className="text-xl text-center capitalize mt-[-0.5rem]">
         {props.pokemon.name}
       </div>
@@ -89,7 +99,11 @@ const PokemonListing: React.FC<{
         height={256}
         layout="fixed"
       />
-      <button className={btn} onClick={() => props.vote()}>
+      <button
+        className={btn}
+        onClick={() => props.vote()}
+        disabled={props.disabled}
+      >
         Rounder
       </button>
     </div>
