@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@prisma/client": "^3.5.0",
     "@trpc/client": "^9.15.0",
     "@trpc/next": "^9.15.0",
     "@trpc/react": "^9.15.0",
@@ -23,6 +24,7 @@
     "@types/react": "17.0.37",
     "autoprefixer": "^10.4.0",
     "postcss": "^8.4.1",
+    "prisma": "^3.5.0",
     "tailwindcss": "^2.2.19",
     "typescript": "4.5.2"
   }
