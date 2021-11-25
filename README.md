@@ -15,4 +15,4 @@ npm run dev
 - [x] Use next/image to handle image caching and better rendering
 - [x] Persist data fetched from PokemonAPI
 - [x] Create the results page with counting/sorting
-- [ ] Better loading state between votes
+- [x] Better loading state between votes
