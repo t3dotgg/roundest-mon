@@ -30,30 +30,31 @@ export default function Home() {
     updateIds(getOptionsForVote());
   };
 
+  const dataLoaded =
+    !firstPokemon.isLoading &&
+    firstPokemon.data &&
+    !secondPokemon.isLoading &&
+    secondPokemon.data;
+
   return (
-    <div className="h-screen w-screen flex flex-col justify-center items-center relative">
-      <div className="text-2xl text-center">Which Pokémon is Rounder?</div>
-      <div className="p-2" />
-      <div className="border rounded p-8 flex justify-between items-center max-w-2xl">
-        {!firstPokemon.isLoading &&
-          firstPokemon.data &&
-          !secondPokemon.isLoading &&
-          secondPokemon.data && (
-            <>
-              <PokemonListing
-                pokemon={firstPokemon.data}
-                vote={() => voteForRoundest(first)}
-              />
-              <div className="p-8">Vs</div>
-              <PokemonListing
-                pokemon={secondPokemon.data}
-                vote={() => voteForRoundest(second)}
-              />
-            </>
-          )}
-        <div className="p-2" />
-      </div>
-      <div className="absolute bottom-0 w-full text-xl text-center pb-2">
+    <div className="h-screen w-screen flex flex-col justify-between items-center relative">
+      <div className="text-2xl text-center pt-8">Which Pokémon is Rounder?</div>
+      {dataLoaded && (
+        <div className="border rounded p-8 flex justify-between items-center max-w-2xl">
+          <PokemonListing
+            pokemon={firstPokemon.data}
+            vote={() => voteForRoundest(first)}
+          />
+          <div className="p-8">Vs</div>
+          <PokemonListing
+            pokemon={secondPokemon.data}
+            vote={() => voteForRoundest(second)}
+          />
+          <div className="p-2" />
+        </div>
+      )}
+      {!dataLoaded && <img src="/rings.svg" className="w-48" />}
+      <div className="w-full text-xl text-center pb-2">
         <a href="https://github.com/TheoBr/roundest-mon">Github</a>
         {" | "}
         <Link href="/results">
