@@ -15,7 +15,6 @@ export default function Home() {
     data: pokemonPair,
     refetch,
     isLoading,
-    isStale,
   } = trpc.useQuery(["get-pokemon-pair"], {
     refetchInterval: 0,
     refetchOnReconnect: false,
@@ -46,7 +45,7 @@ export default function Home() {
     refetch();
   };
 
-  const fetchingNext = voteMutation.isLoading || isLoading || isStale;
+  const fetchingNext = voteMutation.isLoading || isLoading;
 
   return (
     <div className="h-screen w-screen flex flex-col justify-between items-center relative">
