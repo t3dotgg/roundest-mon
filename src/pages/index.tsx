@@ -16,7 +16,7 @@ export default function Home() {
     refetch,
     isLoading,
   } = trpc.useQuery(["get-pokemon-pair"], {
-    refetchInterval: 0,
+    refetchInterval: false,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
   });
