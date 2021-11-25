@@ -7,6 +7,7 @@ import { inferQueryResponse } from "./api/trpc/[trpc]";
 import Image from "next/image";
 import Link from "next/link";
 import Head from "next/head";
+import { usePlausible } from "next-plausible";
 
 const btn =
   "inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500";
@@ -20,6 +21,7 @@ export default function Home() {
   const secondPokemon = trpc.useQuery(["get-pokemon-by-id", { id: second }]);
 
   const voteMutation = trpc.useMutation(["cast-vote"]);
+  const plausible = usePlausible();
 
   const voteForRoundest = (selected: number) => {
     if (selected === first) {
@@ -27,7 +29,8 @@ export default function Home() {
     } else {
       voteMutation.mutate({ votedFor: second, votedAgainst: first });
     }
-    // todo: fire mutation to persist changes
+
+    plausible("cast-vote");
     updateIds(getOptionsForVote());
   };
 
