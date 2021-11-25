@@ -1,7 +1,9 @@
 import type { GetServerSideProps } from "next";
 import { prisma } from "@/backend/utils/prisma";
 import { AsyncReturnType } from "@/utils/ts-bs";
+
 import Image from "next/image";
+import Head from "next/head";
 
 const getPokemonInOrder = async () => {
   return await prisma.pokemon.findMany({
@@ -53,6 +55,9 @@ const ResultsPage: React.FC<{
 }> = (props) => {
   return (
     <div className="flex flex-col items-center">
+      <Head>
+        <title>Roundest Pokemon Results</title>
+      </Head>
       <h2 className="text-2xl p-4">Results</h2>
       <div className="flex flex-col w-full max-w-2xl border">
         {props.pokemon
