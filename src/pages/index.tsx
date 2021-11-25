@@ -15,6 +15,7 @@ export default function Home() {
     data: pokemonPair,
     refetch,
     isLoading,
+    isStale,
   } = trpc.useQuery(["get-pokemon-pair"], {
     refetchInterval: 0,
     refetchOnReconnect: false,
@@ -45,9 +46,7 @@ export default function Home() {
     refetch();
   };
 
-  const dataLoaded = !!pokemonPair;
-
-  const fetchingNext = voteMutation.isLoading || isLoading;
+  const fetchingNext = voteMutation.isLoading || isLoading || isStale;
 
   return (
     <div className="h-screen w-screen flex flex-col justify-between items-center relative">
@@ -55,7 +54,7 @@ export default function Home() {
         <title>Roundest Pokemon</title>
       </Head>
       <div className="text-2xl text-center pt-8">Which Pokémon is Rounder?</div>
-      {dataLoaded && (
+      {pokemonPair && (
         <div className="p-8 flex justify-between items-center max-w-2xl flex-col md:flex-row animate-fade-in">
           <PokemonListing
             pokemon={pokemonPair.firstPokemon}
@@ -71,7 +70,7 @@ export default function Home() {
           <div className="p-2" />
         </div>
       )}
-      {!dataLoaded && <img src="/rings.svg" className="w-48" />}
+      {!pokemonPair && <img src="/rings.svg" className="w-48" />}
       <div className="w-full text-xl text-center pb-2">
         <a href="https://twitter.com/t3dotgg">Twitter</a>
         <span className="p-4">{"-"}</span>
