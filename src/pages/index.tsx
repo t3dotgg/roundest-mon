@@ -54,7 +54,7 @@ export default function Home() {
       </Head>
       <div className="text-2xl text-center pt-8">Which Pokémon is Rounder?</div>
       {dataLoaded && (
-        <div className="p-8 flex justify-between items-center max-w-2xl flex-col md:flex-row">
+        <div className="p-8 flex justify-between items-center max-w-2xl flex-col md:flex-row animate-fade-in">
           <PokemonListing
             pokemon={pokemonPair.firstPokemon}
             vote={() => voteForRoundest(pokemonPair.firstPokemon.id)}
@@ -98,6 +98,7 @@ const PokemonListing: React.FC<{
         width={256}
         height={256}
         layout="fixed"
+        className="animate-fade-in"
       />
       <button
         className={btn}
