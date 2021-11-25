@@ -2,6 +2,10 @@
 
 Answering all of life's toughest questions
 
+## Why?
+
+Why not. I [streamed most of the creation of this project if you're curious](https://www.twitch.tv/videos/1215014362). Regardless of how you feel about the idea, I think the technical details of this implementation are worth learning from.
+
 ## Getting Started
 
 Prerequisite:
