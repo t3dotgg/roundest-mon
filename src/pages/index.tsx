@@ -47,6 +47,8 @@ export default function Home() {
 
   const dataLoaded = !!pokemonPair;
 
+  const fetchingNext = voteMutation.isLoading || isLoading;
+
   return (
     <div className="h-screen w-screen flex flex-col justify-between items-center relative">
       <Head>
@@ -58,13 +60,13 @@ export default function Home() {
           <PokemonListing
             pokemon={pokemonPair.firstPokemon}
             vote={() => voteForRoundest(pokemonPair.firstPokemon.id)}
-            disabled={isLoading}
+            disabled={fetchingNext}
           />
-          <div className="p-8 italic text-xl">or</div>
+          <div className="p-8 italic text-xl">{"or"}</div>
           <PokemonListing
             pokemon={pokemonPair.secondPokemon}
             vote={() => voteForRoundest(pokemonPair.secondPokemon.id)}
-            disabled={isLoading}
+            disabled={fetchingNext}
           />
           <div className="p-2" />
         </div>
@@ -89,7 +91,12 @@ const PokemonListing: React.FC<{
   disabled: boolean;
 }> = (props) => {
   return (
-    <div className="flex flex-col items-center" key={props.pokemon.id}>
+    <div
+      className={`flex flex-col items-center transition-opacity ${
+        props.disabled && "opacity-0"
+      }`}
+      key={props.pokemon.id}
+    >
       <div className="text-xl text-center capitalize mt-[-0.5rem]">
         {props.pokemon.name}
       </div>
