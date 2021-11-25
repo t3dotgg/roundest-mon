@@ -61,7 +61,16 @@ const ResultsPage: React.FC<{
       <h2 className="text-2xl p-4">Results</h2>
       <div className="flex flex-col w-full max-w-2xl border">
         {props.pokemon
-          .sort((a, b) => generateCountPercent(b) - generateCountPercent(a))
+          .sort((a, b) => {
+            const difference =
+              generateCountPercent(b) - generateCountPercent(a);
+
+            if (difference === 0) {
+              return b._count.VoteFor - a._count.VoteFor;
+            }
+
+            return difference;
+          })
           .map((currentPokemon, index) => {
             return <PokemonListing pokemon={currentPokemon} key={index} />;
           })}
