@@ -10,7 +10,7 @@ import Head from "next/head";
 import { usePlausible } from "next-plausible";
 
 const btn =
-  "inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500";
+  "inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm font-medium rounded-full text-gray-700 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500";
 
 export default function Home() {
   const [ids, updateIds] = useState(() => getOptionsForVote());
@@ -47,7 +47,7 @@ export default function Home() {
       </Head>
       <div className="text-2xl text-center pt-8">Which Pokémon is Rounder?</div>
       {dataLoaded && (
-        <div className="border rounded p-8 flex justify-between items-center max-w-2xl flex-col md:flex-row">
+        <div className="p-8 flex justify-between items-center max-w-2xl flex-col md:flex-row">
           <PokemonListing
             pokemon={firstPokemon.data}
             vote={() => voteForRoundest(first)}
