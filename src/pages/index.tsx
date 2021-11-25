@@ -44,12 +44,12 @@ export default function Home() {
       </Head>
       <div className="text-2xl text-center pt-8">Which Pokémon is Rounder?</div>
       {dataLoaded && (
-        <div className="border rounded p-8 flex justify-between items-center max-w-2xl">
+        <div className="border rounded p-8 flex justify-between items-center max-w-2xl flex-col md:flex-row">
           <PokemonListing
             pokemon={firstPokemon.data}
             vote={() => voteForRoundest(first)}
           />
-          <div className="p-8">Vs</div>
+          <div className="p-8 italic text-xl">or</div>
           <PokemonListing
             pokemon={secondPokemon.data}
             vote={() => voteForRoundest(second)}
@@ -77,15 +77,15 @@ const PokemonListing: React.FC<{
 }> = (props) => {
   return (
     <div className="flex flex-col items-center">
+      <div className="text-xl text-center capitalize mt-[-0.5rem]">
+        {props.pokemon.name}
+      </div>
       <Image
         src={props.pokemon.spriteUrl}
         width={256}
         height={256}
         layout="fixed"
       />
-      <div className="text-xl text-center capitalize mt-[-0.5rem]">
-        {props.pokemon.name}
-      </div>
       <button className={btn} onClick={() => props.vote()}>
         Rounder
       </button>
