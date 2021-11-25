@@ -53,9 +53,11 @@ const ResultsPage: React.FC<{
     <div className="flex flex-col items-center">
       <h2 className="text-2xl p-4">Results</h2>
       <div className="flex flex-col w-full max-w-2xl border">
-        {props.pokemon.map((currentPokemon, index) => {
-          return <PokemonListing pokemon={currentPokemon} key={index} />;
-        })}
+        {props.pokemon
+          .sort((a, b) => generateCountPercent(b) - generateCountPercent(a))
+          .map((currentPokemon, index) => {
+            return <PokemonListing pokemon={currentPokemon} key={index} />;
+          })}
       </div>
     </div>
   );
