@@ -30,7 +30,7 @@ export default function Home() {
   };
 
   return (
-    <div className="h-screen w-screen flex flex-col justify-center items-center">
+    <div className="h-screen w-screen flex flex-col justify-center items-center relative">
       <div className="text-2xl text-center">Which Pokémon is Rounder?</div>
       <div className="p-2" />
       <div className="border rounded p-8 flex justify-between items-center max-w-2xl">
@@ -51,6 +51,9 @@ export default function Home() {
             </>
           )}
         <div className="p-2" />
+      </div>
+      <div className="absolute bottom-0 w-full text-xl text-center pb-2">
+        <a href="https://github.com/TheoBr/roundest-mon">Github</a>
       </div>
     </div>
   );
