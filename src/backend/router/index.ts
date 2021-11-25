@@ -9,19 +9,14 @@ export const appRouter = trpc
     async resolve() {
       const [first, second] = getOptionsForVote();
 
-      const firstPokemon = await prisma.pokemon.findFirst({
-        where: { id: first },
+      const bothPokemon = await prisma.pokemon.findMany({
+        where: { id: { in: [first, second] } },
       });
 
-      // TODO: Use some math to make the pairing more meaningful
-      // Related issue - https://github.com/TheoBr/roundest-mon/issues/1
-      const secondPokemon = await prisma.pokemon.findFirst({
-        where: { id: second },
-      });
+      if (bothPokemon.length !== 2)
+        throw new Error("Failed to find two pokemon");
 
-      if (!firstPokemon || !secondPokemon) throw new Error("lol doesn't exist");
-
-      return { firstPokemon, secondPokemon };
+      return { firstPokemon: bothPokemon[0], secondPokemon: bothPokemon[1] };
     },
   })
   .mutation("cast-vote", {
