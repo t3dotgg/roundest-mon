@@ -13,7 +13,8 @@ export const appRouter = trpc
         where: { id: first },
       });
 
-      // TODO: Use some math based on a sort
+      // TODO: Use some math to make the pairing more meaningful
+      // Related issue - https://github.com/TheoBr/roundest-mon/issues/1
       const secondPokemon = await prisma.pokemon.findFirst({
         where: { id: second },
       });
