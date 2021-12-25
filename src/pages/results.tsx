@@ -83,5 +83,6 @@ export default ResultsPage;
 
 export const getStaticProps: GetServerSideProps = async () => {
   const pokemonOrdered = await getPokemonInOrder();
-  return { props: { pokemon: pokemonOrdered }, revalidate: 60 };
+  const DAY_IN_SECONDS = 60 * 60 * 24;
+  return { props: { pokemon: pokemonOrdered }, revalidate: DAY_IN_SECONDS };
 };
