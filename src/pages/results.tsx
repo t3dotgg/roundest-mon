@@ -34,17 +34,21 @@ const generateCountPercent = (pokemon: PokemonQueryResult[number]) => {
   return (VoteFor / (VoteFor + VoteAgainst)) * 100;
 };
 
-const PokemonListing: React.FC<{ pokemon: PokemonQueryResult[number] }> = ({
+const PokemonListing: React.FC<{ pokemon: PokemonQueryResult[number], rank: number }> = ({
   pokemon,
+  rank,
 }) => {
   return (
-    <div className="flex border-b p-2 items-center justify-between">
+    <div className="relative flex border-b p-2 items-center justify-between">
       <div className="flex items-center">
         <Image src={pokemon.spriteUrl} width={64} height={64} layout="fixed" />
         <div className="capitalize">{pokemon.name}</div>
       </div>
       <div className="pr-4">
         {generateCountPercent(pokemon).toFixed(2) + "%"}
+      </div>
+      <div className="absolute top-0 left-0 flex items-center justify-center px-2 font-semibold text-white bg-yellow-400 rounded-br-md">
+        {rank}
       </div>
     </div>
   );
@@ -72,7 +76,7 @@ const ResultsPage: React.FC<{
             return difference;
           })
           .map((currentPokemon, index) => {
-            return <PokemonListing pokemon={currentPokemon} key={index} />;
+            return <PokemonListing pokemon={currentPokemon} key={index} rank={index + 1} />;
           })}
       </div>
     </div>
