@@ -47,7 +47,7 @@ const PokemonListing: React.FC<{ pokemon: PokemonQueryResult[number], rank: numb
       <div className="pr-4">
         {generateCountPercent(pokemon).toFixed(2) + "%"}
       </div>
-      <div className="absolute top-0 left-0 flex items-center justify-center z-20 font-semibold text-white bg-yellow-400 rounded-br-md">
+      <div className="absolute top-0 left-0 flex items-center justify-center px-2 z-20 font-semibold text-white bg-yellow-400 rounded-br-md">
         {rank}
       </div>
     </div>
