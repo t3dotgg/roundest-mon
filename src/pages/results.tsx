@@ -41,13 +41,20 @@ const PokemonListing: React.FC<{ pokemon: PokemonQueryResult[number], rank: numb
   return (
     <div className="relative flex border-b p-2 items-center justify-between">
       <div className="flex items-center">
-        <Image src={pokemon.spriteUrl} width={64} height={64} layout="fixed" />
-        <div className="capitalize">{pokemon.name}</div>
+         <div className="flex items-center pl-4">
+          <Image
+            src={pokemon.spriteUrl}
+            width={64}
+            height={64}
+            layout="fixed"
+          />
+          <div className="pl-2 capitalize">{pokemon.name}</div>
+        </div>
       </div>
       <div className="pr-4">
         {generateCountPercent(pokemon).toFixed(2) + "%"}
       </div>
-      <div className="absolute top-0 left-0 flex items-center justify-center px-2 z-20 font-semibold text-white bg-yellow-400 rounded-br-md">
+      <div className="absolute top-0 left-0 z-20 flex items-center justify-center px-2 font-semibold text-white bg-gray-600 border border-gray-500 shadow-lg rounded-br-md">
         {rank}
       </div>
     </div>
