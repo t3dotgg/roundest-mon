@@ -38,7 +38,7 @@ const AboutPage = () => {
           {"- "}
           <a
             className="text-blue-200 underline"
-            href="https://www.twitch.tv/videos/1215014362"
+            href="https://www.youtube.com/watch?v=PKy2lYEnhgs"
           >
             Twitch stream where I built this monstrosity
           </a>
