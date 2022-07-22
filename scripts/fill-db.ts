@@ -10,7 +10,7 @@ const doBackfill = async () => {
   const formattedPokemon = allPokemon.results.map((p, index) => ({
     id: index + 1,
     name: (p as { name: string }).name,
-    spriteUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
+    spriteUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
       index + 1
     }.png`,
   }));
