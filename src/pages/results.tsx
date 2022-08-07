@@ -1,4 +1,4 @@
-import type { GetServerSideProps } from "next";
+import type { GetStaticProps } from "next";
 import { prisma } from "@/backend/utils/prisma";
 import { AsyncReturnType } from "@/utils/ts-bs";
 
@@ -92,7 +92,7 @@ const ResultsPage: React.FC<{
 
 export default ResultsPage;
 
-export const getStaticProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const pokemonOrdered = await getPokemonInOrder();
   const DAY_IN_SECONDS = 60 * 60 * 24;
   return { props: { pokemon: pokemonOrdered }, revalidate: DAY_IN_SECONDS };
