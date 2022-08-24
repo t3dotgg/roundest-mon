@@ -11,8 +11,11 @@ export default async function middleware(
   request: NextRequest,
   event: NextFetchEvent
 ): Promise<Response | undefined> {
-  console.log("are we redis-in?");
   const ip = request.ip ?? "127.0.0.1";
+
+  // Early escape if hitting the "blocked" redirect
+  if (request.nextUrl.pathname === "/api/blocked")
+    return NextResponse.next(request);
 
   const { success, pending, limit, reset, remaining } = await ratelimit.limit(
     `mw_${ip}`
