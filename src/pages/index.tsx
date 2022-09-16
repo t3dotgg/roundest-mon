@@ -3,7 +3,6 @@ import type React from "react";
 import { inferQueryResponse } from "./api/trpc/[trpc]";
 
 import Image from "next/image";
-import Link from "next/link";
 import Head from "next/head";
 import { usePlausible } from "next-plausible";
 
@@ -48,7 +47,7 @@ export default function Home() {
   const fetchingNext = voteMutation.isLoading || isLoading;
 
   return (
-    <div className="h-screen w-screen flex flex-col justify-between items-center relative">
+    <div className="filler">
       <Head>
         <title>Roundest Pokemon</title>
       </Head>
@@ -70,17 +69,7 @@ export default function Home() {
         </div>
       )}
       {!pokemonPair && <img src="/rings.svg" className="w-48" />}
-      <div className="w-full text-xl text-center pb-2">
-        <a href="https://twitter.com/t3dotgg">Twitter</a>
-        <span className="p-4">{"-"}</span>
-        <Link href="/results">
-          <a>Results</a>
-        </Link>
-        <span className="p-4">{"-"}</span>
-        <Link href="/about">
-          <a>About</a>
-        </Link>
-      </div>
+      <div />
     </div>
   );
 }

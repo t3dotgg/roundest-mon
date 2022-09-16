@@ -3,6 +3,7 @@ import "../styles/global.css";
 import type { AppProps } from "next/app";
 import PlausibleProvider from "next-plausible";
 import Head from "next/head";
+import Layout from "@/components/Layout";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const description =
@@ -51,7 +52,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           content="Round - Video Calls Powered By T3 Tools"
         />
       </Head>
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </PlausibleProvider>
   );
 }
