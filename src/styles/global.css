@@ -3,6 +3,28 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .filler {
+    @apply
+    flex
+    flex-col
+    h-screen
+    items-center
+    justify-evenly
+    relative
+  }
+  .footer {
+    @apply
+    pb-2
+    text-xl
+    text-center
+    w-full
+    fixed
+    left-0
+    bottom-0
+  }
+}
+
 body {
   @apply text-gray-100 bg-gray-800;
 }
