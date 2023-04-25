@@ -3,14 +3,12 @@
 
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-  provider             = "mysql"
+  provider             = "postgresql"
   url                  = env("DATABASE_URL")
   shadowDatabaseUrl    = env("SHADOW_URL")
-  referentialIntegrity = "prisma"
 }
 
 model Vote {
