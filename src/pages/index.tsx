@@ -94,6 +94,7 @@ const PokemonListing: React.FC<{
 }> = (props) => {
   return (
     <div
+      style="image-rendering: pixelated"
       className={`flex flex-col items-center transition-opacity ${
         props.disabled && "opacity-0"
       }`}
